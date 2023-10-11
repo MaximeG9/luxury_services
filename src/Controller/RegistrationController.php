@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,14 +28,21 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $candidat = new Candidat;
+            $candidat->setUser($user);
+            $candidat->setDateCreation(new DateTimeImmutable());
+            $candidat->setDateSuppression(new DateTimeImmutable());
+            
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
+            // Des qu'il se connecte, l'user devient candidat
 
             $entityManager->persist($user);
+            $entityManager->persist($candidat);
             $entityManager->flush();
             // do anything else you need here, like send an email
             $email = (new Email())

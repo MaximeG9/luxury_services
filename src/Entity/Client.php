@@ -28,13 +28,13 @@ class Client
     private ?string $poste = null;
 
     #[ORM\Column]
-    private ?int $telContact = null;
+    private ?string $telContact = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mailContact = null;
 
-    #[ORM\Column]
-    private ?int $note = null;
+    #[ORM\Column(length: 1000)]
+    private ?string $note = null;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: OffreEmploi::class)]
     private Collection $offreEmplois;
@@ -42,6 +42,11 @@ class Client
     public function __construct()
     {
         $this->offreEmplois = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nomSociete;
     }
 
     public function getId(): ?int
@@ -97,12 +102,12 @@ class Client
         return $this;
     }
 
-    public function getTelContact(): ?int
+    public function getTelContact(): ?string
     {
         return $this->telContact;
     }
 
-    public function setTelContact(int $telContact): static
+    public function setTelContact(string $telContact): static
     {
         $this->telContact = $telContact;
 
@@ -121,12 +126,12 @@ class Client
         return $this;
     }
 
-    public function getNote(): ?int
+    public function getNote(): ?string
     {
         return $this->note;
     }
 
-    public function setNote(int $note): static
+    public function setNote(string $note): static
     {
         $this->note = $note;
 

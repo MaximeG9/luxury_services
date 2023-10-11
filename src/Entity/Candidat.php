@@ -16,72 +16,72 @@ class Candidat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $genre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $nationalite = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $isPasseport = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?\DateTimeImmutable $dateNaissance = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $lieuNaissance = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?bool $disponibilte = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $jobCategorie = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $experience = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable:true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable:true)]
     private ?string $note = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:false)]
     private ?\DateTimeImmutable $dateCreation = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:true)]
     private ?\DateTimeImmutable $dateSuppression = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable:true)]
     private ?string $pays = null;
 
     #[ORM\OneToOne(inversedBy: 'candidat', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\OneToOne(inversedBy: 'cv', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Media $cv = null;
 
     #[ORM\OneToOne(inversedBy: 'photoProfil', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Media $photoProfil = null;
 
     #[ORM\OneToOne(inversedBy: 'passeportFichier', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Media $passeportFichier = null;
 
     #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: Candidature::class)]
     private Collection $candidatures;
+
+    #[ORM\ManyToOne(inversedBy: 'Candidat')]
+    private ?JobCategorie $jobCategorie = null;
 
     public function __construct()
     {
@@ -185,18 +185,6 @@ class Candidat
     public function setDisponibilte(bool $disponibilte): static
     {
         $this->disponibilte = $disponibilte;
-
-        return $this;
-    }
-
-    public function getJobCategorie(): ?string
-    {
-        return $this->jobCategorie;
-    }
-
-    public function setJobCategorie(string $jobCategorie): static
-    {
-        $this->jobCategorie = $jobCategorie;
 
         return $this;
     }
@@ -359,6 +347,18 @@ class Candidat
                 $candidature->setCandidat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJobCategorie(): ?JobCategorie
+    {
+        return $this->jobCategorie;
+    }
+
+    public function setJobCategorie(?JobCategorie $jobCategorie): static
+    {
+        $this->jobCategorie = $jobCategorie;
 
         return $this;
     }

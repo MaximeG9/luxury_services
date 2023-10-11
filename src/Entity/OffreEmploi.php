@@ -14,9 +14,6 @@ class OffreEmploi
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $statut = null;
-
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
@@ -30,20 +27,11 @@ class OffreEmploi
     #[ORM\Column]
     private ?bool $activation = null;
 
-    #[ORM\Column]
-    private ?int $note = null;
-
     #[ORM\Column(length: 255)]
     private ?string $titreOffre = null;
 
-    #[ORM\Column]
-    private ?int $typeOffre = null;
-
     #[ORM\Column(length: 255)]
     private ?string $location = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $jobCategorie = null;
 
     #[ORM\Column]
     private ?int $salaire = null;
@@ -51,21 +39,20 @@ class OffreEmploi
     #[ORM\Column]
     private ?\DateTimeImmutable $dateCreation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'offreEmplois')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?JobCategorie $jobCategorie = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $dateFin = null;
+
+    #[ORM\ManyToOne(inversedBy: 'offreEmplois')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeOffre $typeOffre = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStatut(): ?int
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(int $statut): static
-    {
-        $this->statut = $statut;
-
-        return $this;
     }
 
     public function getReference(): ?string
@@ -116,18 +103,6 @@ class OffreEmploi
         return $this;
     }
 
-    public function getNote(): ?int
-    {
-        return $this->note;
-    }
-
-    public function setNote(int $note): static
-    {
-        $this->note = $note;
-
-        return $this;
-    }
-
     public function getTitreOffre(): ?string
     {
         return $this->titreOffre;
@@ -140,18 +115,6 @@ class OffreEmploi
         return $this;
     }
 
-    public function getTypeOffre(): ?int
-    {
-        return $this->typeOffre;
-    }
-
-    public function setTypeOffre(int $typeOffre): static
-    {
-        $this->typeOffre = $typeOffre;
-
-        return $this;
-    }
-
     public function getLocation(): ?string
     {
         return $this->location;
@@ -160,18 +123,6 @@ class OffreEmploi
     public function setLocation(string $location): static
     {
         $this->location = $location;
-
-        return $this;
-    }
-
-    public function getJobCategorie(): ?string
-    {
-        return $this->jobCategorie;
-    }
-
-    public function setJobCategorie(string $jobCategorie): static
-    {
-        $this->jobCategorie = $jobCategorie;
 
         return $this;
     }
@@ -196,6 +147,42 @@ class OffreEmploi
     public function setDateCreation(\DateTimeImmutable $dateCreation): static
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    public function getJobCategorie(): ?JobCategorie
+    {
+        return $this->jobCategorie;
+    }
+
+    public function setJobCategorie(?JobCategorie $jobCategorie): static
+    {
+        $this->jobCategorie = $jobCategorie;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeImmutable
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeImmutable $dateFin): static
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    public function getTypeOffre(): ?TypeOffre
+    {
+        return $this->typeOffre;
+    }
+
+    public function setTypeOffre(?TypeOffre $typeOffre): static
+    {
+        $this->typeOffre = $typeOffre;
 
         return $this;
     }
