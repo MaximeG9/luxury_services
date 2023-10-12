@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\OffreEmploiRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,9 +14,16 @@ class HomeController extends AbstractController
     public function index(OffreEmploiRepository $offreEmploiRepository): Response
     {
 
+        /**
+         * @var User $user
+         */
+
+         $user = $this->getUser();
+
         $offresEmplois = $offreEmploiRepository->findAll();
         return $this->render('home/index.html.twig', [
-           'offresEmplois' => $offresEmplois
+           'offresEmplois' => $offresEmplois,
+           'user' => $user,
         ]);
     }
 }

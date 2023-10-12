@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Candidat;
 use App\Entity\Media;
 use App\Entity\User;
 use App\Form\CandidatType;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

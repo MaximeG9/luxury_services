@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -27,7 +28,7 @@ class OffreEmploiCrudController extends AbstractCrudController
         return [
             TextField::new('reference'),
             AssociationField::new('client'),
-            TextField::new('description'),
+            TextareaField::new('description'),
             BooleanField::new('activation'),
             TextField::new('titreOffre'),
             TextField::new('location'),
